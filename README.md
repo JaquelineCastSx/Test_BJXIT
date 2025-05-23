@@ -1,7 +1,7 @@
 # Test_BJXIT
 ### Backend
-API realizada con .NET en MVC (Modelo Vista Controlador), desplegado visualmente con swagger, existen los endpoints para las tablas definidas abajo en los diagramas, además de el endoint para el login que genera un token de JWT
-
+API realizada con .NET en MVC (Modelo Vista Controlador), desplegado visualmente con swagger, existen los endpoints para las tablas definidas abajo en los diagramas, además de el endoint para el login que genera un token de JWT.
+La base de datos fue creada en mysql, ya que por mi sistema operativo (MacOS) no puedo utilizar SQLServer.
 ### Frontend
 Desarrollo de aplicación visual en Angular, con clases de estilos de bootstrap, se hace el login con los usuarios creados, consume la API creada, los servicios estan definidos completamente para cada endpoint, hace un guard para la verificación de roles de los usuarios.
 ### Diagramas iniciales
