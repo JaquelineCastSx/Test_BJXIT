@@ -10,4 +10,6 @@ public class Usuario
 
     [ForeignKey("Rol")]
     public int rol_id { get; set; }
+
+    public Rol Rol { get; set; }
 }

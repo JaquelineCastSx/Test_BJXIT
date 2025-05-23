@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BSC.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+835f4051fb2e5c76b795464284a9d7ca2cf16e1a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cea19914f42428bbd4b66695e984a0e450d84795")]
 [assembly: System.Reflection.AssemblyProductAttribute("BSC.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BSC.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

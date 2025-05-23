@@ -1,0 +1,21 @@
+.list-item{
+  padding: 10px;
+  cursor: pointer;
+  &:hover{
+    background-color: #f0f0f0;
+  }
+  &.active{
+    background-color: #e0e0e0;
+  }
+  &.disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+    color: #b0b0b0;
+  }
+  &.disabled:hover{
+    background-color: transparent;
+  }
+  &.active:hover{
+    background-color: #d0d0d0;
+  }
+}

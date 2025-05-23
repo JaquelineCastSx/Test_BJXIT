@@ -1,0 +1,17 @@
+<nav class="bg-light border-end" style="width: 16rem; padding: 1rem;">
+  <!-- make the ngIf for the <li> values -->
+  <ul class="list-unstyled">
+    <li class="my-3 h5 list-item" *ngFor="let item of items">
+      <a [routerLink]="item.route" class="text-decoration-none text-black">
+        <i class="{{item.icon}}"></i>
+        {{ item.name }}
+      </a>
+    </li>
+    <li class="my-3 h5 list-item">
+      <a [routerLink]="['/']" class="text-decoration-none text-black">
+        <i class="bi bi-box-arrow-left"></i>
+        Salir
+      </a>
+    </li>
+  </ul>
+</nav>

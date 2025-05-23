@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 // Add the following using if your AppDbContext is in a specific namespace, e.g.:
 // using BSC.API.Data;
 
@@ -29,6 +32,31 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddAuthentication(BearerTokenDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "bscapi",
+            ValidAudience = "bscapp",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Clave_JWT!_2025.Prueba-BJXIT_Castillo_4"))
+        };
+    }
+);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy => policy
+            .WithOrigins("http://localhost:4200") // URL de tu app Angular
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,6 +68,8 @@ app.UseSwaggerUI(c =>
 });
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAngularApp");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers(); // << importante
 app.Run();

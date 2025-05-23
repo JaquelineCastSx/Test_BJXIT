@@ -1,7 +1,11 @@
+using BSC.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
 
 
 namespace BSC.API.Controllers
@@ -15,6 +19,30 @@ namespace BSC.API.Controllers
     {
       _context = context;
     }
+
+    private string GenerateJwtToken(Usuario usuario)
+{
+    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Clave_JWT!_2025.Prueba-BJXIT_Castillo_4"));
+    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+    var claims = new[]
+    {
+        new Claim(ClaimTypes.NameIdentifier, usuario.id.ToString()),
+        new Claim(ClaimTypes.Email, usuario.correo),
+        new Claim(ClaimTypes.Role, usuario.rol_id.ToString())
+    };
+
+    var token = new JwtSecurityToken(
+        issuer: "bscapi",
+        audience: "bscapp",
+        claims: claims,
+        expires: DateTime.Now.AddHours(1),
+        signingCredentials: credentials
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(token);
+}
+
 
 
     [HttpGet]
@@ -38,7 +66,7 @@ namespace BSC.API.Controllers
       return CreatedAtAction(nameof(GetUsuario), new { id = usuario.id }, usuario);
     }
 
-    [HttpPatch("{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUsuario(int id, Usuario usuario)
     {
       if (id != usuario.id) return BadRequest();
@@ -56,5 +84,31 @@ namespace BSC.API.Controllers
       await _context.SaveChangesAsync();
       return NoContent();
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        var usuario = await _context.Usuarios
+            .Include(u => u.Rol)
+            .FirstOrDefaultAsync(u => u.correo == request.correo && u.contrasena == request.contrasena);
+
+        if (usuario == null)
+        {
+            return Unauthorized(new { message = "Correo o contraseña incorrectos." });
+        }
+
+        var token = GenerateJwtToken(usuario);
+
+        return Ok(new
+        {
+            token,
+            usuario.id,
+            usuario.nombre,
+            usuario.correo,
+            usuario.rol_id,
+            Rol = usuario.Rol?.nombre
+        });
+    }
+
   }
 }

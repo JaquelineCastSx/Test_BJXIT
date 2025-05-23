@@ -34,7 +34,7 @@ namespace BSC.API.Controllers
       await _context.SaveChangesAsync();
       return CreatedAtAction(nameof(GetProducto), new { id = producto.id }, producto);
     }
-    [HttpPatch("{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProducto(int id, Producto producto)
     {
       if (id != producto.id) return BadRequest();

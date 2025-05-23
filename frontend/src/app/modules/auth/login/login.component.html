@@ -1,0 +1,25 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light p-4">
+  <div class="bg-white p-4 rounded-4 shadow w-100" style="max-width: 28rem;">
+    <h2 class="h3 fw-bold text-dark text-center mb-4">Iniciar Sesión</h2>
+
+    <form class="mb-3" (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <div class="mb-3">
+        <label class="form-label ms-1" for="email">Correo electrónico</label>
+        <input type="email" name="correo" [(ngModel)]="email" id="email" class="form-control" placeholder="usuario@correo.com" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label ms-1" for="password">Contraseña</label>
+        <input type="password" [(ngModel)]="password" name="contrasena" id="password" class="form-control"
+          placeholder="••••••••" />
+      </div>
+
+      <button type="submit"
+        class="w-100 btn btn-primary fw-bold py-2 px-4 rounded">
+        Ingresar
+      </button>
+    </form>
+
+    <p class="text-center mt-3">© 2025 BSC | BJXIT</p>
+  </div>
+</div>
